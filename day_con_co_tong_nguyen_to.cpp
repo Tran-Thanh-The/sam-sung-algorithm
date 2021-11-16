@@ -3,7 +3,7 @@ using namespace std;
 
 int n;
 int a[20];
-vector<string> v;
+vector<vector<int>> v;
 vector<int> vNumber;
 vector<int> tmp;
 
@@ -17,13 +17,7 @@ bool isPrime( int n) {
 }
 
 void out() {
-	string s = "";
-	for ( int i = 0; i < vNumber.size(); ++i) {
-		s += to_string(vNumber[i]);
-		if ( i != vNumber.size()-1)
-			s += " ";	
-	}
-	v.push_back(s);
+	v.push_back(vNumber);
 }
 
 void Try( int total, int i) {
@@ -38,6 +32,15 @@ void Try( int total, int i) {
 		total -= a[j];
 		vNumber.erase( vNumber.begin() + vNumber.size()-1);
 	}
+}
+
+bool cmp( vector<int> a, vector<int> b) {
+	int n = min( a.size(), b.size());
+	for ( int i = 0; i < n; i++) {
+		if ( a[i] != b[i])
+			return a[i] < b[i];
+	}
+	return a.size() < b.size();
 }
 
 bool tt( int a, int b) {
@@ -63,12 +66,13 @@ int main() {
 		
 		Try( 0, 0);
 		
-		sort( v.begin(), v.end());
+		sort( v.begin(), v.end(), cmp);
 	
-		cout << v[0] << endl;
-		for ( int i = 1; i < v.size(); ++i) {
-			if ( v[i] != v[i-1])
-				cout << v[i] << endl;
+		
+		for ( int i = 0; i < v.size(); ++i) {
+			for ( auto j:v[i]) 
+				cout << j << " ";
+			cout << endl;
 		}
 		
 	}
